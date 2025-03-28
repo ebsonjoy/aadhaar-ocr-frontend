@@ -70,14 +70,17 @@ const AadhaarUpload = () => {
     formData.append('back', back);
 
     try {
-      // Simulate network delay
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      const response = await fetch('http://localhost:5000/api/ocr/upload', {
+      // const response = await fetch('http://localhost:5000/api/ocr/upload', {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ocr/upload`, {
         method: 'POST',
         body: formData,
       });
-
+      
       if (!response.ok) throw new Error('Upload failed');
 
       const data = await response.json();
