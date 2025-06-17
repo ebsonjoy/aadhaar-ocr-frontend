@@ -2,12 +2,10 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Scan, Loader2, } from 'lucide-react';
 import ImageUploadBox from './ImageUploadBox';
-import ErrorDisplay from './ErrorDisplay';
 
 interface ImageUploaderProps {
   frontPreview: string | null;
   backPreview: string | null;
-  error: string | null;
   isLoading: boolean;
   handleFileChange: (
     file: File | null,
@@ -25,7 +23,6 @@ interface ImageUploaderProps {
 const ImageUploader: React.FC<ImageUploaderProps> = ({
   frontPreview,
   backPreview,
-  error,
   isLoading,
   handleFileChange,
   handleUpload,
@@ -54,7 +51,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         </p>
       </div>
 
-      <ErrorDisplay error={error} />
       <div className="grid grid-cols-2 gap-4">
         <ImageUploadBox 
           label="Front Side" 

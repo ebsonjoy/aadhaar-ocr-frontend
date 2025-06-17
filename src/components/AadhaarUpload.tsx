@@ -7,6 +7,7 @@ import ResultDisplay from './ResultDisplay';
 import FullImageViewer from './FullImageViewer';
 import { uploadAadhaarImages, validateFiles } from '../services/uploadService';
 import { AadhaarResult } from '../types';
+import ErrorDisplay from './ErrorDisplay';
 
 const AadhaarUpload = () => {
   const [front, setFront] = useState<File | null>(null);
@@ -37,19 +38,19 @@ const AadhaarUpload = () => {
     setError(null);
     setResult(null);
     setIsLoading(true);
+    
     const validation = validateFiles(front, back);
     if (!validation.isValid) {
       setError(validation.error || 'Validation failed');
       setIsLoading(false);
       return;
     }
-    
+
     try {
       const response = await uploadAadhaarImages(front!, back!);
       console.log('res', response);
-      
+
       if (!response.success) {
-        console.log(response);
         throw new Error(response.message || 'Upload failed');
       }
 
@@ -80,11 +81,10 @@ const AadhaarUpload = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
-          {/* Upload Section */}
+          
           <ImageUploader 
             frontPreview={frontPreview}
             backPreview={backPreview}
-            error={error}
             isLoading={isLoading}
             handleFileChange={handleFileChange}
             handleUpload={handleUpload}
@@ -95,7 +95,6 @@ const AadhaarUpload = () => {
             setFullImageView={setFullImageView}
           />
           
-          {/* Result Section */}
           <ResultDisplay 
             isLoading={isLoading}
             result={
@@ -106,6 +105,10 @@ const AadhaarUpload = () => {
                 : null
             }
           />
+        </div>
+
+        <div className="px-8 pb-4">
+          <ErrorDisplay error={error} />
         </div>
 
         {result && (
@@ -125,7 +128,26 @@ const AadhaarUpload = () => {
             </motion.button>
           </motion.div>
         )}
+
+        {error && (
+          <motion.div 
+            className="w-full flex justify-center pb-8"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.4 }}
+          >
+            <motion.button
+              onClick={handleUploadAnother}
+              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg shadow transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Re-upload Aadhaar Card
+            </motion.button>
+          </motion.div>
+        )}
       </motion.div>
+
       <FullImageViewer 
         fullImageView={fullImageView} 
         setFullImageView={setFullImageView} 

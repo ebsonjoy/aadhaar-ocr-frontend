@@ -23,38 +23,16 @@ export default function Header() {
             </h1>
           </motion.div>
           
-          {/* Optional Navigation or Additional Actions */}
-          <motion.nav
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <ul className="flex items-center space-x-4">
-              <motion.li 
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <a 
-                  href="#" 
-                  className="text-white/80 hover:text-white transition-colors font-medium"
-                >
-                  Home
-                </a>
-              </motion.li>
-              <motion.li 
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <a 
-                  href="#" 
-                  className="text-white/80 hover:text-white transition-colors font-medium"
-                >
-                  About
-                </a>
-              </motion.li>
-            </ul>
-          </motion.nav>
+            <p className="text-white/90 text-sm font-medium">
+              Extract text from images instantly
+            </p>
+          </motion.div>
         </div>
       </header>
     );
-  }
+}

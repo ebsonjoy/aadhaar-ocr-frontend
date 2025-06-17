@@ -9,13 +9,16 @@ export async function uploadAadhaarImages(
   formData.append('back', back);
 
   try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ocr/upload`, {
-        method: 'POST',
-        body: formData,
-      });
+    const response = await fetch('http://localhost:5000/api/ocr/upload', {
+      method: 'POST',
+      body: formData,
+    });
+      // const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/ocr/upload`, {
+      //   method: 'POST',
+      //   body: formData,
+      // });
     if (!response.ok) {
       return await response.json()
-      // throw new Error('Upload failed');
     }
 
     return await response.json();
